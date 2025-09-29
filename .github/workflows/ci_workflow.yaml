@@ -16,7 +16,7 @@ jobs:
                 node-version: '22'
             - name: Install dependencies
               run: npm ci   # Creates a clean install of dependencies based on package-lock.json
-            - name: Check voulnerabilities
+            - name: Check for voulnerabilities
               run: npm audit --audit-level=high
             - name: Linting
               run: npm run lint
@@ -27,5 +27,5 @@ jobs:
             - name: Render deployment
               env:
                 deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-              run: |
+              run: |  # With pipeline you can use a multi-line script
                 curl "$deploy_url"
