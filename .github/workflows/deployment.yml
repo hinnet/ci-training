@@ -1,0 +1,13 @@
+name: Render deployment
+
+on: 
+    workflow_dispatch
+jobs:
+    Render_deployment:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to Render
+              env:
+                deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+              run: |  # With pipeline you can use a multi-line script
+                curl "$deploy_url"
