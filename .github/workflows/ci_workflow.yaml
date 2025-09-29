@@ -34,4 +34,7 @@ jobs:
           env:
             deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
           run: |  # With pipeline you can use a multi-line script
-            curl "$deploy_url"
+              if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+                echo "RENDER_DEPLOY_HOOK_URL secret is not set."
+                exit 1
+              fi
