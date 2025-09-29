@@ -24,8 +24,14 @@ jobs:
               run: npm run test
             - name: Build project
               run: npm run build
-            - name: Render deployment
-              env:
-                deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-              run: |  # With pipeline you can use a multi-line script
-                curl "$deploy_url"
+
+    Render_deployment:
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      needs: Node-CI
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to Render
+          env:
+            deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          run: |  # With pipeline you can use a multi-line script
+            curl "$deploy_url"
